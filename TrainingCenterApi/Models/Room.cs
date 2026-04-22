@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TrainingCenterApi.Models;
 
-public class Room
+public class Room : IValidatableObject
 {
     public int Id { get; set; }
 
@@ -20,4 +20,21 @@ public class Room
     public bool HasProjector { get; set; }
 
     public bool IsActive { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            yield return new ValidationResult(
+                "Name must not be empty or whitespace.",
+                new[] { nameof(Name) });
+        }
+
+        if (string.IsNullOrWhiteSpace(BuildingCode))
+        {
+            yield return new ValidationResult(
+                "BuildingCode must not be empty or whitespace.",
+                new[] { nameof(BuildingCode) });
+        }
+    }
 }

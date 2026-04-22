@@ -25,6 +25,27 @@ public class Reservation : IValidatableObject
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
+        if (string.IsNullOrWhiteSpace(OrganizerName))
+        {
+            yield return new ValidationResult(
+                "OrganizerName must not be empty or whitespace.",
+                new[] { nameof(OrganizerName) });
+        }
+
+        if (string.IsNullOrWhiteSpace(Topic))
+        {
+            yield return new ValidationResult(
+                "Topic must not be empty or whitespace.",
+                new[] { nameof(Topic) });
+        }
+
+        if (string.IsNullOrWhiteSpace(Status))
+        {
+            yield return new ValidationResult(
+                "Status must not be empty or whitespace.",
+                new[] { nameof(Status) });
+        }
+
         if (EndTime <= StartTime)
         {
             yield return new ValidationResult(
